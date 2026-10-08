@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lecture 03 · Inside Your First Flutter Project</title>
+  <meta name="description" content="Mobile App Development with Flutter, Lecture 03: the project folder, pubspec.yaml and every line of main.dart.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Sora:wght@600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="flutter-logo" viewBox="0 0 166 210">
+    <path fill="#44D1FD" d="M10 101 100 11h56L38 129z"/>
+    <path fill="#1FBCFD" d="M51 150 100 102h56l-77 76z"/>
+    <path fill="#08589C" d="M79 178 107 150l49 49h-56z"/>
+  </symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M6 3v12"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-windows" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9"/><path d="M2 19.5 4 16h16l2 3.5a1 1 0 0 1-.9 1.5H2.9a1 1 0 0 1-.9-1.5z"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-disk" viewBox="0 0 24 24"><path d="M22 12H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1z"/><path d="M6 16h.01M10 16h.01"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.6a11 11 0 0 1 14 0"/><path d="M1.4 9a16 16 0 0 1 21.2 0"/><path d="M8.5 16.1a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="m7.5 4.3 9 5.1"/><path d="M21 8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><path d="M12 19h8"/></symbol>
+  <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+  <symbol id="i-mouse" viewBox="0 0 24 24"><path d="m4 4 7 17 2.5-7.5L21 11z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-chrome" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M21.2 8H12M3.9 6.1 8.5 14M10.9 21.9l4.6-7.9"/></symbol>
+  <symbol id="i-cable" viewBox="0 0 24 24"><path d="M17 21v-2a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1v2"/><path d="M19 15V6.5a3.5 3.5 0 0 0-7 0v11a3.5 3.5 0 0 1-7 0V9"/><path d="M3 9V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4z"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 7c-1.5-1.3-4.5-1.6-6 .5-1.6 2.3-1 6.6 1.3 9.9 1 1.4 2 2.6 3.2 2.5.9 0 1.2-.6 1.5-.6s.6.6 1.5.6c1.2.1 2.2-1.1 3.2-2.5 2.3-3.3 2.9-7.6 1.3-9.9-1.5-2.1-4.5-1.8-6-.5z"/><path d="M12 7c0-2 1-3.5 3-4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+</svg>
+
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<main class="deck">
+
+<!-- 01 · Title -->
+<section class="slide">
+  <div class="canvas"><div class="frame frame--title">
+    <div class="stagger">
+      <p class="kicker">Lecture 03 · Mobile App Development</p>
+      <h1 class="hero">Inside Your First<br><span class="grad-text">Flutter</span> Project</h1>
+      <p class="lead lead--hero">What every line of <b>main.dart</b> means, explained simply.</p>
+      <div class="chips">
+        <span class="chip"><span class="avatar">MI</span>Eng. Monther Ibrahim</span>
+        <span class="chip"><span class="avatar">M</span>Muhammad, M.Sc.</span>
+        <span class="chip">Fall 2026</span>
+      </div>
+      <p class="keys"><kbd>→</kbd> next &nbsp;·&nbsp; <kbd>F</kbd> fullscreen &nbsp;·&nbsp; <kbd>N</kbd> notes &nbsp;·&nbsp; <kbd>T</kbd> theme</p>
+    </div>
+    <div class="title-right" aria-hidden="true">
+      <div class="logo-glow"></div>
+      <svg class="logo logo--hero"><use href="#flutter-logo"/></svg>
+      <div class="term code code--sm term--title">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  // …
+}</pre>
+      </div>
+    </div>
+  </div></div>
+  <aside class="notes">
+    <p>Welcome back. Last time everyone installed Flutter. Today we open the project and understand it line by line.</p>
+    <p>Ask everyone to open VS Code now and check <code>flutter doctor</code> still shows green ticks.</p>
+  </aside>
+</section>
+
+<!-- 02 · Recap + today -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Today</p>
+      <h2 class="title">From installed to understood</h2>
+    </header>
+    <div class="body" style="grid-template-columns: .85fr 1.15fr; grid-template-rows: 1fr auto; align-items: start;">
+      <article class="card" style="display:grid; gap:1.2cqw;">
+        <span class="badge badge--ok">Last lecture</span>
+        <ul class="checklist" style="margin-top:0;">
+          <li><span>Installed Flutter</span></li>
+          <li><span><code>flutter doctor</code> shows green ticks</span></li>
+          <li><span>Created <span class="path">my_first_app</span></span></li>
+        </ul>
+      </article>
+      <article class="card card--hl">
+        <span class="badge">Today</span>
+        <ol class="steps stagger" style="margin-top:1.2cqw; font-size:1.4cqw;">
+          <li><span>Create the project</span></li>
+          <li><span>The two files that matter: <b>main.dart</b> and <b>pubspec.yaml</b></span></li>
+          <li><span><code>import</code>: bring in the toolbox</span></li>
+          <li><span><code>main()</code> and <code>runApp()</code>: where the app starts</span></li>
+          <li><span><b>StatelessWidget</b> and <code>build()</code></span></li>
+          <li><span><b>MaterialApp</b>: the wrapper of your app</span></li>
+        </ol>
+      </article>
+      <div class="callout callout--ok" style="grid-column: 1 / -1;">
+        <svg class="ico"><use href="#i-target"/></svg>
+        <div><b>Goal:</b> write your first Flutter app from an <b>empty file</b>, and understand every line.</div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Quick recap of lecture 2: anyone who still has red crosses in <code>flutter doctor</code> should raise a hand now. The co-instructor can help them while you continue.</p>
+  </aside>
+</section>
+
+<!-- 03 · Create the project -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Step 1</p>
+      <h2 class="title">Create the project</h2>
+      <p class="lead">Two ways, same result. Let's do it together now.</p>
+    </header>
+    <div class="body create">
+      <article class="card card--hl stepcard">
+        <div class="stepcard__top">
+          <div class="itile"><svg class="ico"><use href="#i-code"/></svg></div>
+          <div><span class="badge badge--ok">Easiest</span><h3>With VS Code</h3></div>
+        </div>
+        <ol class="steps steps--tight">
+          <li><span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> → <b>Flutter: New Project</b></span></li>
+          <li><span>Choose <b>Application</b></span></li>
+          <li><span>Pick a folder, e.g. <span class="path">Documents\flutter_projects</span></span></li>
+          <li><span>Type the name <span class="path">my_first_app</span> → <kbd>Enter</kbd></span></li>
+        </ol>
+      </article>
+      <article class="card stepcard">
+        <div class="stepcard__top">
+          <div class="itile"><svg class="ico"><use href="#i-terminal"/></svg></div>
+          <div><span class="badge">Pro way</span><h3>With the terminal</h3></div>
+        </div>
+        <div class="term">
+          <div class="term__bar"><i></i><i></i><i></i><span>Windows PowerShell</span></div>
+          <pre><span class="t-p">PS&gt;</span> flutter create my_first_app
+<span class="t-ok">All done!</span>
+<span class="t-p">PS&gt;</span> code my_first_app</pre>
+        </div>
+        <p class="small muted"><code>code</code> opens the folder in VS Code.</p>
+      </article>
+      <div class="card naming">
+        <h4>Naming rules</h4>
+        <span class="name-ok"><svg class="ico"><use href="#i-check"/></svg>my_first_app</span>
+        <span class="name-bad"><svg class="ico"><use href="#i-x"/></svg>My First App <small>spaces, capitals</small></span>
+        <span class="name-bad"><svg class="ico"><use href="#i-x"/></svg>my-first-app <small>dashes</small></span>
+        <span class="name-bad"><svg class="ico"><use href="#i-x"/></svg>1st_app <small>starts with a number</small></span>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Everyone creates a fresh project now, even if they did it last week. Walk through the VS Code way slowly.</p>
+    <p>If <code>code my_first_app</code> doesn't work, VS Code isn't on PATH. Just use File → Open Folder instead.</p>
+  </aside>
+</section>
+
+<!-- 04 · The project folder -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Step 2</p>
+      <h2 class="title">Only two files matter today</h2>
+      <p class="lead">Your project has many folders. Today we only open <b>two files</b>.</p>
+    </header>
+    <div class="body inside">
+      <div class="card tree stagger">
+        <div class="row"><span><span class="d">my_first_app/</span></span><span></span></div>
+        <div class="row"><span><span class="g">├─ </span><span class="d">android/  ios/</span></span><span class="note">phone files, leave them alone</span></div>
+        <div class="row"><span><span class="g">├─ </span><span class="d">lib/</span></span><span class="note"></span></div>
+        <div class="row is-star"><span><span class="g">│  └─ </span><span class="f">main.dart</span></span><span class="note">★ your code</span></div>
+        <div class="row"><span><span class="g">├─ </span><span class="d">test/</span></span><span class="note">automated tests</span></div>
+        <div class="row"><span><span class="g">├─ </span><span class="d">web/  windows/ …</span></span><span class="note">other platforms</span></div>
+        <div class="row is-star"><span><span class="g">└─ </span><span class="f">pubspec.yaml</span></span><span class="note">★ your app's settings</span></div>
+      </div>
+      <div class="facts stagger">
+        <div class="card fact">
+          <div class="itile"><svg class="ico"><use href="#i-code"/></svg></div>
+          <div><h3>lib/main.dart</h3><p>The code of your app. Every Flutter app <b>starts</b> in this file.</p></div>
+        </div>
+        <div class="card fact">
+          <div class="itile"><svg class="ico"><use href="#i-package"/></svg></div>
+          <div><h3>pubspec.yaml</h3><p>Your app's <b>ID card</b>: its name, version and the packages it uses.</p></div>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Open the project in VS Code and show the Explorer panel on the left. Click lib → main.dart, then pubspec.yaml.</p>
+  </aside>
+</section>
+
+<!-- 05 · pubspec.yaml -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">The settings file</p>
+      <h2 class="title"><code>pubspec.yaml</code>: your app's ID card</h2>
+    </header>
+    <div class="body walk">
+      <div>
+        <div class="term code code--lg">
+          <div class="term__bar"><i></i><i></i><i></i><span>pubspec.yaml</span><span class="grow"></span><span>simplified</span></div>
+<pre class="hl" data-lang="yaml" data-groups="1:g1;3:g2;7-10:g3;12-13:g4">name: my_first_app
+description: "A new Flutter project."
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.0   # yours may be different
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+flutter:
+  uses-material-design: true</pre>
+        </div>
+      </div>
+      <div class="legend-groups stagger">
+        <div class="lg" style="--c:#13B9FD;"><span class="n">1</span><b>name</b><span>Your app's name. Same rules: lowercase_with_underscores</span></div>
+        <div class="lg" style="--c:#FFC857;"><span class="n">2</span><b>version</b><span><b>1.0.0</b> is what users see, <b>+1</b> is the build number</span></div>
+        <div class="lg" style="--c:#4ADE80;"><span class="n">3</span><b>dependencies</b><span>Packages: ready-made code your app uses</span></div>
+        <div class="lg" style="--c:#C792EA;"><span class="n">4</span><b>uses-material-design</b><span>Turns on Material icons and design</span></div>
+        <div class="callout callout--warn"><svg class="ico"><use href="#i-alert"/></svg><div><b>Spaces matter!</b> Indent with 2 spaces, never Tab.</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>The real file has many comments. This is the important part. YAML uses indentation to show what belongs to what: <code>sdk: flutter</code> belongs to <code>flutter:</code>, which belongs to <code>dependencies:</code>.</p>
+    <p>After editing pubspec.yaml and saving, VS Code runs <code>flutter pub get</code> automatically to download packages. We'll add our first package in a later lecture.</p>
+  </aside>
+</section>
+
+<!-- 06 · Start from zero -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">main.dart</p>
+      <h2 class="title">Let's start from an empty file</h2>
+    </header>
+    <div class="body walk" style="grid-template-columns: .8fr 1.2fr;">
+      <div class="side">
+        <ol class="steps bigsteps stagger">
+          <li><span>Open <span class="path">lib/main.dart</span></span></li>
+          <li><span>It has a demo app (about 120 lines). Press <kbd>Ctrl</kbd> + <kbd>A</kbd>, then <kbd>Delete</kbd></span></li>
+          <li><span><b>Type</b> this code with us. Don't copy-paste. Typing is how you learn!</span></li>
+        </ol>
+        <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div>Next slides: we read it <b>line by line</b>.</div></div>
+      </div>
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Type slowly with the students. VS Code will show red underlines while the code is incomplete, which is normal.</p>
+    <p>When you type <code>MaterialApp(</code>, VS Code shows suggestions. Show them how to accept one with Enter.</p>
+  </aside>
+</section>
+
+<!-- 07 · import -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Line 1</p>
+      <h2 class="title"><code>import</code>: bring in the toolbox</h2>
+    </header>
+    <div class="body walk">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="1">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+      <div class="explain stagger">
+        <div class="say">
+          <p><code>import</code> brings ready-made code into your file.</p>
+          <p><b>material.dart</b> is Flutter's toolbox: Text, buttons, colors, icons and many more widgets.</p>
+        </div>
+        <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div>Like opening your <b>toolbox</b> before you start building.</div></div>
+        <div class="callout callout--warn"><svg class="ico"><use href="#i-alert"/></svg><div>Forgot it? You'll see <span class="err">Undefined class 'StatelessWidget'</span></div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Point out the semicolon at the end. In Dart, most lines end with <code>;</code>.</p>
+    <p>Demo: comment out the import line and show the red errors everywhere, then bring it back.</p>
+  </aside>
+</section>
+
+<!-- 08 · main & runApp -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Lines 3–5</p>
+      <h2 class="title"><code>main()</code> and <code>runApp()</code>: the start</h2>
+    </header>
+    <div class="body walk">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="3-5">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+      <div class="explain stagger">
+        <div class="defs">
+          <div class="def"><code>main()</code><span>The <b>front door</b>. Every Dart program starts here.</span></div>
+          <div class="def"><code>runApp(…)</code><span>Takes your widget and <b>puts it on the screen</b>.</span></div>
+          <div class="def"><code>{ }</code><span>The body: the code inside runs, top to bottom.</span></div>
+          <div class="def"><code>void</code><span>This function doesn't give back a value.</span></div>
+          <div class="def"><code>const</code><span>"This never changes", so Flutter can work faster.</span></div>
+        </div>
+        <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div>Tapping the app icon → <b>main()</b> runs → <b>runApp()</b> shows <b>MyApp</b>.</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Don't go deep into <code>const</code>. Say: VS Code suggests it, we accept it, and it makes the app a little faster.</p>
+  </aside>
+</section>
+
+<!-- 09 · class MyApp -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Lines 7–8</p>
+      <h2 class="title"><code>class MyApp</code>: our own widget</h2>
+    </header>
+    <div class="body walk">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="7-8,19">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+      <div class="explain stagger">
+        <div class="defs">
+          <div class="def"><code>class</code><span>A <b>blueprint</b>. Here we design our own widget.</span></div>
+          <div class="def"><code>MyApp</code><span>Its name. Class names start with a <b>Capital</b> letter.</span></div>
+          <div class="def"><code>extends</code><span>"is a kind of": MyApp <b>is a</b> StatelessWidget.</span></div>
+          <div class="def"><code>const MyApp(…);</code><span>The constructor. VS Code writes it for you.</span></div>
+        </div>
+        <div class="callout callout--ok"><svg class="ico"><use href="#i-zap"/></svg><div><b>Shortcut:</b> type <code>stless</code> + <kbd>Enter</kbd> in VS Code. It writes the whole widget for you!</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>The class starts on line 7 and ends with the last <code>}</code> on line 19. Everything in between belongs to MyApp.</p>
+    <p>Demo the <code>stless</code> snippet in an empty spot: type the name and VS Code fills the rest.</p>
+  </aside>
+</section>
+
+<!-- 10 · Stateless vs Stateful -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Concept</p>
+      <h2 class="title">StatelessWidget vs StatefulWidget</h2>
+      <p class="lead">Two kinds of widgets. The difference: <b>can it change?</b></p>
+    </header>
+    <div class="body" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; align-items: stretch;">
+      <article class="card card--hl" style="display:grid; gap:1.4cqw; align-content:space-evenly;">
+        <div style="display:flex; gap:1.4cqw; align-items:center;">
+          <div class="poster poster--still">Hello!</div>
+          <div><span class="badge">Today</span><h3 style="margin-top:.5cqw;">StatelessWidget</h3></div>
+        </div>
+        <p style="font-size:1.6cqw;">Never changes after it appears. Like a <b>printed poster</b>.</p>
+        <div class="example-list"><span class="chip">Text</span><span class="chip">Icon</span><span class="chip">Logo</span><span class="chip">Image</span></div>
+      </article>
+      <article class="card" style="display:grid; gap:1.4cqw; align-content:space-evenly;">
+        <div style="display:flex; gap:1.4cqw; align-items:center;">
+          <div class="poster poster--live">3</div>
+          <div><span class="badge badge--warm">Later</span><h3 style="margin-top:.5cqw;">StatefulWidget</h3></div>
+        </div>
+        <p style="font-size:1.6cqw;">Can change while the app runs. Like a <b>scoreboard</b>.</p>
+        <div class="example-list"><span class="chip">Counter</span><span class="chip">Checkbox</span><span class="chip">Like button</span><span class="chip">Text field</span></div>
+      </article>
+      <div class="callout callout--ok" style="grid-column: 1 / -1;"><svg class="ico"><use href="#i-check-circle"/></svg><div>For now, everything we build is <b>Stateless</b>. Stateful comes in a later lecture.</div></div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Ask the class: is a "Login" title stateless or stateful? (Stateless.) A like button that turns red when tapped? (Stateful.)</p>
+  </aside>
+</section>
+
+<!-- 11 · build -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Lines 10–12</p>
+      <h2 class="title"><code>build()</code>: "what should I show?"</h2>
+    </header>
+    <div class="body walk">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="10-12,18">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+      <div class="explain stagger">
+        <div class="say"><p>Every widget has a <code>build</code> method. Flutter calls it to ask: <b>"What should I draw?"</b></p></div>
+        <div class="defs">
+          <div class="def"><code>@override</code><span>We write <b>our own</b> version of build.</span></div>
+          <div class="def"><code>Widget</code><span>build must give back a widget.</span></div>
+          <div class="def"><code>return</code><span>Here is the answer: <b>this</b> widget.</span></div>
+          <div class="def"><code>context</code><span>Where the widget sits. Ignore it for now.</span></div>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Analogy: the build method is the widget's drawing. Flutter asks "draw yourself", and build returns the picture made of other widgets.</p>
+  </aside>
+</section>
+
+<!-- 12 · MaterialApp -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Lines 12–17</p>
+      <h2 class="title"><code>MaterialApp</code>: the wrapper of your app</h2>
+    </header>
+    <div class="body walk">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="12-17">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+      <div class="explain stagger">
+        <div class="say"><p>It gives your app Google's <b>Material Design</b> look and sets it up.</p></div>
+        <div class="defs">
+          <div class="def"><code>home:</code><span>The <b>first screen</b> you see</span></div>
+          <div class="def"><code>title:</code><span>The app's name</span></div>
+          <div class="def"><code>theme:</code><span>Colors and fonts (later)</span></div>
+        </div>
+        <div class="phones" style="justify-content:flex-start; gap:2cqw;">
+          <div class="ph-col">
+            <div class="ph ph--black" style="--pw:9.5cqw;"><div class="ph__scr"><div class="ph__island"></div><span class="debug">DEBUG</span></div></div>
+            <p class="ph-cap"><code>true</code></p>
+          </div>
+          <div class="ph-col">
+            <div class="ph ph--black" style="--pw:9.5cqw;"><div class="ph__scr"><div class="ph__island"></div></div></div>
+            <p class="ph-cap"><code>false</code></p>
+          </div>
+          <p class="small muted" style="align-self:center; max-width: 14cqw;"><code>debugShowCheckedModeBanner</code> shows or hides the <b>DEBUG</b> ribbon.</p>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Almost every Flutter app has exactly one MaterialApp at the top. Everything else goes inside it.</p>
+    <p>The DEBUG ribbon only appears while developing. Real users never see it, but it's nice to hide for screenshots.</p>
+  </aside>
+</section>
+
+<!-- 13 · Center & Text -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Lines 14–16</p>
+      <h2 class="title"><code>Center</code> and <code>Text</code>: what you see</h2>
+    </header>
+    <div class="body walk">
+      <div class="term code">
+        <div class="term__bar"><i></i><i></i><i></i><span>lib/main.dart</span></div>
+<pre class="hl" data-hl="14-16">import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: Text('Hello, Flutter!'),
+      ),
+    );
+  }
+}</pre>
+      </div>
+      <div class="explain stagger">
+        <div class="defs">
+          <div class="def"><code>Center</code><span>Puts its child in the <b>middle</b> of the screen.</span></div>
+          <div class="def"><code>child:</code><span>The <b>one</b> widget inside.</span></div>
+          <div class="def"><code>Text('…')</code><span>Shows text. Put the words between quotes <b>' '</b>.</span></div>
+        </div>
+        <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div>Widgets inside widgets: <b>MaterialApp</b> holds <b>Center</b>, and <b>Center</b> holds <b>Text</b>.</div></div>
+        <div class="callout"><svg class="ico"><use href="#i-check"/></svg><div>Notice the commas <b>,</b> at the end of each line. They keep the code tidy.</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>The "trailing commas" make VS Code format the code nicely, one widget per line. Show Shift+Alt+F (Format Document).</p>
+  </aside>
+</section>
+
+<!-- 14 · Widget tree -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Big picture</p>
+      <h2 class="title">Your app is a tree of widgets</h2>
+      <p class="lead">Read it from top to bottom: each widget <b>holds</b> the next one.</p>
+    </header>
+    <div class="body" style="grid-template-columns: 1fr 1fr; align-items: center;">
+      <div class="wt" style="transform: scale(1.12); transform-origin: top center;">
+        <ul><li>
+          <span class="nd nd--root">runApp()<small>starts the app</small></span>
+          <ul><li>
+            <span class="nd nd--ours">MyApp<small>our StatelessWidget</small></span>
+            <ul><li>
+              <span class="nd">MaterialApp<small>the wrapper</small></span>
+              <ul><li>
+                <span class="slot">home:</span>
+                <span class="nd">Center<small>puts it in the middle</small></span>
+                <ul><li>
+                  <span class="slot">child:</span>
+                  <span class="nd nd--hl">Text<small>'Hello, Flutter!'</small></span>
+                </li></ul>
+              </li></ul>
+            </li></ul>
+          </li></ul>
+        </li></ul>
+      </div>
+      <div class="side">
+        <div class="callout callout--info"><svg class="ico"><use href="#i-package"/></svg><div>Like <b>LEGO</b>: small blocks snap together into bigger blocks, until you have a whole app.</div></div>
+        <div class="callout"><svg class="ico"><use href="#i-star"/></svg><div>The amber box is <b>our</b> widget. The others come from Flutter's toolbox.</div></div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Map each box back to the code: <code>runApp</code> on line 4, <code>MyApp</code> on line 7, <code>MaterialApp</code> on line 12, <code>Center</code> on line 14, <code>Text</code> on line 15.</p>
+  </aside>
+</section>
+
+<!-- 15 · Run it -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Run it</p>
+      <h2 class="title">Press <kbd style="font-size:.7em;">F5</kbd> and look…</h2>
+    </header>
+    <div class="body" style="grid-template-columns: 1.15fr .85fr; align-items: start;">
+      <div class="side">
+        <ol class="steps bigsteps stagger">
+          <li><span>Pick a device: Chrome, the emulator or your phone</span></li>
+          <li><span>Press <kbd>F5</kbd> to run</span></li>
+          <li><span>Change the text to <b>your name</b> and press <kbd>Ctrl</kbd> + <kbd>S</kbd> (hot reload)</span></li>
+        </ol>
+        <div class="callout callout--warn"><svg class="ico"><use href="#i-alert"/></svg><div><b>Red text with yellow lines? Don't panic!</b> It means the text has no page behind it. Next lecture, <b>Scaffold</b> fixes it.</div></div>
+      </div>
+      <div class="center-stack">
+        <div class="ph ph--black" style="--pw:14.5cqw;">
+          <div class="ph__scr"><div class="ph__island"></div>
+            <div class="pbody"><span class="err-text">Hello,<br>Flutter!</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>This is what Flutter really shows: a black background with big red text and a double yellow underline. It's a warning style, not a crash.</p>
+    <p>Build curiosity: "It works, but it's ugly. Why? Find out next lecture." It's a perfect bridge to Scaffold.</p>
+  </aside>
+</section>
+
+<!-- 16 · Common mistakes -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Troubleshooting</p>
+      <h2 class="title">4 beginner mistakes (everyone makes them!)</h2>
+    </header>
+    <div class="body probs">
+      <table class="tbl tbl--probs">
+        <tbody>
+          <tr><td><span class="err">Expected to find ';'.</span></td><td>A line is missing its <b>;</b> at the end. Add it.</td></tr>
+          <tr><td><span class="err">Undefined class 'StatelessWidget'.</span></td><td>The <code>import</code> line is missing at the top.</td></tr>
+          <tr><td><span class="err">The method 'text' isn't defined…</span></td><td>Dart cares about capitals: write <code>Text</code>, not <code>text</code>.</td></tr>
+          <tr><td><span class="err">Expected to find ')'.</span></td><td>A bracket is missing. Every <b>(</b> needs a <b>)</b>, every <b>{</b> needs a <b>}</b>.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout--info"><svg class="ico"><use href="#i-bulb"/></svg><div><b>Tip:</b> red underline in VS Code = a mistake. Hover over it to read the message. <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd> tidies your code.</div></div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Demo each mistake live: delete a semicolon, rename Text to text, remove a bracket. Show the red underline and the message on hover, then fix it.</p>
+    <p>On a Mac, Format Document is Shift+Option+F.</p>
+  </aside>
+</section>
+
+<!-- 17 · Practice + Questions -->
+<section class="slide">
+  <div class="canvas"><div class="frame">
+    <header class="head">
+      <p class="kicker">Wrap-up</p>
+      <h2 class="title">Try it yourself</h2>
+    </header>
+    <div class="body wrap">
+      <article class="card">
+        <h3>Practice at home</h3>
+        <ul class="checklist stagger">
+          <li><span>Delete <span class="path">main.dart</span> and type the app again <b>from memory</b></span></li>
+          <li><span>Show <b>your name</b> in the middle of the screen</span></li>
+          <li><span>Turn the DEBUG ribbon <b>on</b>, then <b>off</b> again</span></li>
+          <li><span>Bonus: make the widget with the <code>stless</code> shortcut</span></li>
+        </ul>
+      </article>
+      <div class="qa">
+        <div class="qa__big grad-text">Questions?</div>
+        <div class="card next">
+          <h4>Next lecture</h4>
+          <p>Revision + Scaffold, AppBar, Text &amp; Container</p>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Mobile App Development · Lecture 03</span><span class="num"></span></footer>
+  </div></div>
+  <aside class="notes">
+    <p>Typing the app from memory is the best practice for this lecture. It should take about 5 minutes by next week.</p>
+  </aside>
+</section>
+
+</main>
+
+<div class="notes-panel" hidden>
+  <h4 class="np-title">Speaker notes</h4>
+  <div class="np-body"></div>
+</div>
+<div class="hint" aria-hidden="true"><kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>F</kbd> fullscreen · <kbd>N</kbd> notes · <kbd>T</kbd> theme</div>
+
+<script src="js/deck.js"></script>
+</body>
+</html>
